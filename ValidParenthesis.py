@@ -1,26 +1,46 @@
-# s = "()"
-# s = "()[]{}"
-s = "(]"
+s = "()"
+#s = "()[]{}"
+#s = "(]"
+#s = "]"
+#s = "([]){"
+#s = "([]"
 
-roundcnt = 0
-curlycnt = 0
-squarecnt = 0
+
+stackP = []
 
 for c in s:
-    if c == '(':
-        roundcnt += 1
-    elif c == ')':
-        roundcnt -= 1
-    elif c == '{':
-        curlycnt += 1
-    elif c == '[':
-        squarecnt += 1
-    elif c == ']':
-        squarecnt -= 1
-    else:
-        curlycnt -= 1
+    flag = False
+    if c == '(' or c == '[' or c == '{':
+        stackP.append(c)
+        flag = False
 
-if roundcnt or curlycnt or squarecnt:
-    print(False)
-else:
-    print(True)
+    elif c == ')':
+        if not stackP:
+            flag = False
+            break
+        elif '(' == stackP.pop():
+            flag = True
+        else:
+            flag = False
+            break
+    elif c == ']':
+        if not stackP:
+            flag = False
+            break
+        elif '[' == stackP.pop():
+            flag = True
+        else:
+            flag = False
+            break
+    elif c == '}':
+        if not stackP:
+            flag = False
+            break
+        elif '{' == stackP.pop():
+            flag = True
+        else:
+            flag = False
+            break
+if stackP:
+    flag = False
+print(flag)
